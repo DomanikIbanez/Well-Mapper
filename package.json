@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "well-mapper",
   "version": "0.1.0",
   "private": true,
@@ -7,12 +6,6 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.7",
-=======
-  "name": "well-mapper-clean",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
->>>>>>> 6ddd5d67f1bc4ca8ef8a2326cc4c445948e90eab
     "@reduxjs/toolkit": "^2.8.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -26,11 +19,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
-<<<<<<< HEAD
     "react-scripts": "5.0.1",
-=======
-    "react-scripts": "^0.0.0",
->>>>>>> 6ddd5d67f1bc4ca8ef8a2326cc4c445948e90eab
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
