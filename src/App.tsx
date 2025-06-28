@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import MapView from './components/MapView';
+import WellSelector from './components/WellSelector';
+import WellInfoPanel from './components/WellInfoPanel';
+import { Box } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <Box p={2}>
+  <h2>Well Mapper</h2>
+  <Grid container spacing={2}>
+    <Grid xs={12} md={4}>
+      <WellSelector />
+      <WellInfoPanel />
+    </Grid>
+    <Grid xs={12} md={8}>
+      <MapView />
+    </Grid>
+  </Grid>
+</Box>
+
   );
 }
-
 export default App;
