@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useSelector } from 'react-redux';
@@ -6,57 +6,150 @@ import { RootState } from '../app/store';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN!;
 
-const MapView: React.FC = () => {
-  const mapContainer = useRef<HTMLDivElement | null>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const markerRef = useRef<mapboxgl.Marker | null>(null); 
+type SelectedFeature = {
+  coordinates: [number, number];
+  name: string;
+};
 
-  const selectedWell = useSelector((state: RootState) => state.well.selectedWell);
+interface MapViewProps {
+  selectedFeature: SelectedFeature | null;
+}
 
+const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const visibleLayers = useSelector((state: RootState) => state.layers.visibleLayers);
+
+    // ✅ Add local state for geojson layer data
+  const [layerData, setLayerData] = useState<Record<string, GeoJSON.FeatureCollection>>({});
+
+  // ✅ Load GeoJSON dynamically on mount
   useEffect(() => {
-    if (map.current || !mapContainer.current) return;
+    const loadGeoJSON = async () => {
+      const [power, oil, substations] = await Promise.all([
+        fetch('/data/powerPlants.geojson').then(res => res.json()),
+        fetch('/data/oilGasFields.geojson').then(res => res.json()),
+        fetch('/data/substations.geojson').then(res => res.json()),
+      ]);
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-95.3698, 29.7604],
-      zoom: 5,
-    });
-    // new mapboxgl.Marker()
-    //   .setLngLat([-95.3698, 29.7604])
-    //   .setPopup(new mapboxgl.Popup().setText("Houston, TX"))
-    //   .addTo(map.current);
+      setLayerData({
+        powerPlants: power,
+        oilGasFields: oil,
+        substations: substations,
+      });
+    };
+
+    loadGeoJSON();
   }, []);
 
-   useEffect(() => {
-    if (!map.current || !selectedWell) return;
+  // 🗺️ Initial map setup
+  useEffect(() => {
+    if (!mapRef.current && mapContainer.current) {
+      mapRef.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-97.5, 30.3],
+        zoom: 5,
+      });
+    }
+  }, []);
 
-    // Fly to new location
-    map.current.flyTo({
-      center: [selectedWell.lng, selectedWell.lat],
-      zoom: 8,
+  // 🔄 Handle visibleLayers updates
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || Object.keys(layerData).length === 0) return;
+
+    const handleLoad = () => {
+      Object.entries(visibleLayers).forEach(([key, isVisible]) => {
+        const sourceId = `${key}-source`;
+        const layerId = `${key}-layer`;
+
+        if (isVisible) {
+          if (!map.getSource(sourceId)) {
+            map.addSource(sourceId, {
+              type: 'geojson',
+              data: layerData[key],
+            });
+          }
+
+          if (!map.getLayer(layerId)) {
+            map.addLayer({
+              id: layerId,
+              type: 'circle',
+              source: sourceId,
+              paint: {
+                'circle-radius': 7,
+                'circle-color': '#007cbf',
+              },
+            });
+
+            // Popup logic
+            map.on('click', layerId, (e: mapboxgl.MapMouseEvent) => {
+              const feature = e.features?.[0];
+              if (!feature) return;
+
+              const coordinates = feature.geometry.type === 'Point'
+                ? (feature.geometry.coordinates as [number, number])
+                : [0, 0];
+
+              const props = feature.properties || {};
+              const content = `
+              <div style="font-family: Roboto, sans-serif; padding: 8px; max-width: 240px;">
+                <div style="font-weight: bold; font-size: 16px; color: #1976d2;">
+                  ${props.name || 'Unknown Site'}
+                </div>
+                <div style="margin-top: 4px; font-size: 14px;">
+                  <strong>Type:</strong> ${props.type || 'N/A'}<br/>
+                  <strong>City:</strong> ${props.city || 'N/A'}
+                </div>
+              </div>`;
+
+              new mapboxgl.Popup()
+                .setLngLat(coordinates as [number, number])
+                .setHTML(content)
+                .addTo(map);
+            });
+
+            // Cursor hover styles
+            map.on('mouseenter', layerId, () => {
+              map.getCanvas().style.cursor = 'pointer';
+            });
+            map.on('mouseleave', layerId, () => {
+              map.getCanvas().style.cursor = '';
+            });
+          }
+        } else {
+          if (map.getLayer(layerId)) map.removeLayer(layerId);
+          if (map.getSource(sourceId)) map.removeSource(sourceId);
+        }
+      });
+    };
+
+    if (map.isStyleLoaded()) {
+      handleLoad();
+    } else {
+      map.once('load', handleLoad);
+    }
+  }, [visibleLayers]);
+
+  // Zoom to feature when selected from table
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !selectedFeature) return;
+
+    map.flyTo({
+      center: selectedFeature.coordinates,
+      zoom: 10,
       essential: true,
     });
 
-    // Remove old marker
-    if (markerRef.current) {
-      markerRef.current.remove();
-    }
+    new mapboxgl.Popup()
+      .setLngLat(selectedFeature.coordinates)
+      .setHTML(`<strong>${selectedFeature.name}</strong>`)
+      .addTo(map);
+  }, [selectedFeature]);
 
-    // Add new marker
-    markerRef.current = new mapboxgl.Marker()
-      .setLngLat([selectedWell.lng, selectedWell.lat])
-      .setPopup(new mapboxgl.Popup().setText(selectedWell.name))
-      .addTo(map.current);
-
-  }, [selectedWell]);
-
-  return (
-    <div
-      ref={mapContainer}
-      style={{ width: '100%', height: '500px', border: '1px solid lightgray' }}
-    />
-  );
+  return <div ref={mapContainer} style={{ height: '500px' }} />;
 };
 
 export default MapView;

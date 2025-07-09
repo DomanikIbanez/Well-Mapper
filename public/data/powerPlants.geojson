@@ -1,0 +1,29 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant",
+        "type": "Power Plant",
+        "city": "Austin"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-97.7431, 30.2672]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station",
+        "type": "Power Plant",
+        "city": "Dallas"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-96.7970, 32.7767]
+      }
+    }
+  ]
+}

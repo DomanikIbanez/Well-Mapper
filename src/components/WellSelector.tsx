@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setSelectedWell } from '../features/wellSlice';
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { mockWells } from '../data/mockWells';
-import type { Well } from '../types/well'
+// import type { Well } from '../types/well'
 
 const WellSelector: React.FC = () => {
   const dispatch = useDispatch();

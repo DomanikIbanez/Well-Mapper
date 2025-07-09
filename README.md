@@ -1,66 +1,61 @@
-# Well Mapper
+# 🌍 Well Mapper (Energy Map Explorer)
 
-A responsive frontend mapping app built with **React**, **Redux Toolkit**, **Mapbox GL JS**, **TypeScript**, and **Material UI**.
+A responsive, interactive mapping app built with **React**, **Redux Toolkit**, **Mapbox GL JS**, **TypeScript**, and **Material UI**.
 
 ## 📌 Features
 
-- Select a well from a dropdown menu
-- View the well's location on an interactive Mapbox map
-- See detailed well information in a clean info panel
-- Responsive layout using Material UI Grid and Card components
-- Redux-managed global state with TypeScript interfaces
-- Modular project structure for scalability and maintainability
+- ✅ Toggle visibility of **3 energy-related layers**:
+  - Power Plants
+  - Oil & Gas Fields
+  - Substations
+- ✅ Click on any map point to view a styled **popup with feature info**
+- ✅ View **feature details** in a smart, filterable **data table**
+- ✅ Click a row in the table to **zoom to and highlight** that feature on the map
+- ✅ Layer control sidebar for better UX
+- 🧠 Typed global state via Redux Toolkit + TypeScript
+- 💅 Material UI styling throughout
 
 ## 🧠 Tech Stack
 
 - React + TypeScript
-- Redux Toolkit (State management)
-- Mapbox GL JS (Interactive maps)
-- Material UI (UI styling and layout)
+- Redux Toolkit (state management)
+- Mapbox GL JS (interactive maps)
+- Material UI (component styling & layout)
+- Material React Table (smart data tables)
 - Create React App
 
-## 📁 Folder Structure (Simplified)
+## 🗂 Folder Structure (Simplified)
 
-```
 src/
-├── app/               # Redux store
-├── components/        # React UI components
-├── data/              # Mock well data
-├── features/          # Redux slice for selected well
-├── types/             # Shared TypeScript interfaces
-└── App.tsx            # Layout + component composition
-```
+├── app/ # Redux store config
+├── components/ # Map, LayerList, FeatureTable, InfoPanel
+├── data/ # GeoJSON datasets
+├── features/ # Redux slices (layer visibility, well selection)
+├── types/ # Shared TypeScript types/interfaces
+└── App.tsx # Root layout + composition
 
 ## 🚀 Getting Started
 
 ### 1. Clone the Repo
 
-```bash
 git clone https://github.com/DomanikIbanez/well-mapper.git
 cd well-mapper
-```
 
 ### 2. Install Dependencies
 
-```bash
 npm install
-```
 
 ### 3. Add `.env`
 
 Create a `.env` file in the root of the project:
 
-```env
 REACT_APP_MAPBOX_TOKEN=your_mapbox_token_here
-```
 
 > 🔐 Do NOT commit your `.env` file.
 
 ### 4. Start the App
 
-```bash
 npm start
-```
 
 ## 🔗 Live Demo
 
