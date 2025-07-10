@@ -30,13 +30,13 @@ const LayerList: React.FC = () => {
   return (
     <div>
       <h3>Layer List</h3>
-      <List>
+      <List component="ul">
         {Object.keys(visibleLayers).map((key) => {
           const layer = key as LayerKey;
           return (
             <ListItem
               key={layer}
-              {...({ button: true } as any)}
+              button
               onClick={() => handleToggle(layer)}
               sx={{ display: 'flex', alignItems: 'center' }}
             >
