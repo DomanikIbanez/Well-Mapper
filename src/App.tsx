@@ -49,12 +49,12 @@ const App = () => {
     <Box p={2}>
       <h2>Energy Map Explorer</h2>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={3} {...({} as any)}>
           <Paper elevation={2} sx={{ p: 2 }}>
             <LayerList />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={9} {...({} as any)}>
           <Paper elevation={2} sx={{ mb: 2 }}>
             <MapView selectedFeature={selectedFeature} />
           </Paper>

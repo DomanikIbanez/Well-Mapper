@@ -36,7 +36,7 @@ const LayerList: React.FC = () => {
           return (
             <ListItem
               key={layer}
-              button
+              {...({ button: true } as any)}
               onClick={() => handleToggle(layer)}
               sx={{ display: 'flex', alignItems: 'center' }}
             >
