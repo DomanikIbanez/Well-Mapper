@@ -57,6 +57,10 @@ REACT_APP_MAPBOX_TOKEN=your_mapbox_token_here
 
 npm start
 
+or (if run into dependency issues)
+
+npm start --legacy-peer-deps 
+
 ## 🔗 Live Demo
 
 _(Coming Soon – hosted on Vercel or GitHub Pages)_
