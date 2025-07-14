@@ -1,0 +1,29 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin",
+        "type": "Basin",
+        "city": "Odessa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-103.5, 31.8]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale",
+        "type": "Basin",
+        "city": "Eagle Ford"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-98.3, 28.4]
+      }
+    }
+  ]
+}

@@ -1,26 +1,91 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { Box, Grid, Paper, Typography, AppBar, Toolbar, IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import MapView from './components/MapView';
+import LayerPanel from './components/LayerPanel';
+import FeatureTable from './components/FeatureTable';
 
-function App() {
+// --- Types ---
+type FeatureRow = {
+  id: string;
+  name: string;
+  type?: string;
+  city?: string;
+  coordinates: [number, number];
+};
+
+const App = () => {
+  const [featureData, setFeatureData] = useState<FeatureRow[]>([]);
+  const [selectedFeature, setSelectedFeature] = useState<{
+    coordinates: [number, number];
+    name: string;
+  } | null>(null);
+
+  const [layersOpen, setLayersOpen] = useState(false);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const datasets = await Promise.all([
+        fetch('/data/powerPlants.geojson').then(res => res.json()),
+        fetch('/data/oilGasFields.geojson').then(res => res.json()),
+        fetch('/data/substations.geojson').then(res => res.json()),
+      ]);
+
+      const allFeatures = datasets.flatMap((data, index) =>
+        (data.features ?? []).map((f: any, i: number) => ({
+          id: `${['plant', 'field', 'sub'][index]}-${i}`,
+          name: f.properties?.name || 'Unnamed',
+          type: f.properties?.type || 'N/A',
+          city: f.properties?.city || 'Unknown',
+          coordinates: f.geometry?.coordinates?.slice(0, 2) ?? [0, 0],
+        }))
+      );
+
+      console.log('✅ Loaded Feature Data:', allFeatures);
+      setFeatureData(allFeatures);
+    };
+
+    loadData();
+  }, []);
+
+  const handleRowClick = (coords: [number, number], name: string) => {
+    setSelectedFeature({ coordinates: coords, name });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ backgroundColor: '#f4f6fa', minHeight: '100vh' }}>
+      <AppBar position="static" sx={{ backgroundColor: '#5c6bc0' }}>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={() => setLayersOpen(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" sx={{ ml: 1 }}>
+            Energy Map Explorer
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <LayerPanel open={layersOpen} onClose={() => setLayersOpen(false)} />
+
+      <Box sx={{ px: 2, py: 3 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={12}>
+            <Paper elevation={3} sx={{ mb: 2, borderRadius: 2 }}>
+              <MapView selectedFeature={selectedFeature} />
+            </Paper>
+            <Paper elevation={3} sx={{ borderRadius: 2 }}>
+              <FeatureTable data={featureData} onRowClick={handleRowClick} />
+            </Paper>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
   );
-}
+};
 
 export default App;
