@@ -8,7 +8,8 @@ import {
   Checkbox,
   IconButton,
   Typography,
-  Box
+  Box,
+  Switch
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FlashOnIcon from '@mui/icons-material/FlashOn';
@@ -72,7 +73,11 @@ const LayerPanel: React.FC<Props> = ({ open, onClose }) => {
               onClick={() => handleToggle(layer)}
               sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
             >
-              <Checkbox edge="start" checked={visibleLayers[layer]} />
+              <Switch
+  edge="start"
+  checked={visibleLayers[layer]}
+  
+/>
               <ListItemIcon>{LAYER_ICONS[layer]}</ListItemIcon>
               <ListItemText primary={LAYER_LABELS[layer]} />
             </ListItem>
