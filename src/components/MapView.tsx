@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Map, {
-  Source,
-  Layer,
-  NavigationControl,
-  Popup
-} from 'react-map-gl';
-import type { MapRef, ViewStateChangeEvent } from 'react-map-gl';
+import Map, { Source, Layer, NavigationControl, Popup, MapRef } from 'react-map-gl';
+import type { Feature, Point, Polygon } from 'geojson';
+import { Box, IconButton, Tooltip } from '@mui/material';
+import RotateLeftIcon from '@mui/icons-material/RotateLeft';
+import RotateRightIcon from '@mui/icons-material/RotateRight';
+import ReplayIcon from '@mui/icons-material/Replay';
+import ExploreIcon from '@mui/icons-material/Explore';
+import Draw from '@mapbox/mapbox-gl-draw';
+import * as turf from '@turf/turf';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../app/store';
-import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN!;
 
@@ -34,6 +37,7 @@ const layerStyle = {
 const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
   const visibleLayers = useSelector((state: RootState) => state.layers.visibleLayers);
   const [layerData, setLayerData] = useState<Record<string, GeoJSON.FeatureCollection>>({});
+  const [filteredData, setFilteredData] = useState<Record<string, GeoJSON.FeatureCollection>>({});
   const [popupInfo, setPopupInfo] = useState<any | null>(null);
   const [viewState, setViewState] = useState({
     longitude: -97.5,
@@ -41,8 +45,8 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
     zoom: 5,
   });
 
-  const mapRef = useRef<any>(null);
-
+  const mapRef = useRef<any | null>(null);
+  const drawRef = useRef<Draw | null>(null);
 
   useEffect(() => {
     const loadGeoJSON = async () => {
@@ -52,14 +56,80 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
         fetch('/data/substations.geojson').then(res => res.json()),
       ]);
 
-      setLayerData({
+      const all = {
         powerPlants: power,
         oilGasFields: oil,
         substations: subs,
-      });
+      };
+
+      setLayerData(all);
+      setFilteredData(all);
     };
 
     loadGeoJSON();
+  }, []);
+
+  const updateFilters = useCallback(() => {
+    const map = mapRef.current?.getMap();
+    if (!map || !drawRef.current) return;
+
+    const polygons = drawRef.current.getAll();
+    if (!polygons.features.length) {
+      setFilteredData(layerData);
+      return;
+    }
+
+    const polygon = polygons.features[0];
+
+    const newFiltered: Record<string, GeoJSON.FeatureCollection> = {};
+
+    Object.entries(layerData).forEach(([key, data]) => {
+      const filtered = {
+        ...data,
+        features: data.features.filter(
+          (feature): feature is Feature<Point> =>
+            feature.geometry.type === 'Point' &&
+            turf.booleanPointInPolygon(feature as Feature<Point>, polygon as Feature<Polygon>)
+        ),
+      };
+      newFiltered[key] = filtered;
+    });
+
+    setFilteredData(newFiltered);
+  }, [layerData]);
+
+  const handleMapLoad = useCallback(() => {
+    const map = mapRef.current?.getMap();
+    if (!map || drawRef.current) return;
+
+    drawRef.current = new Draw({
+      displayControlsDefault: false,
+      controls: {
+        polygon: true,
+        trash: true,
+      },
+    });
+
+    map.addControl(drawRef.current, 'top-left');
+
+    map.on('draw.create', updateFilters);
+    map.on('draw.update', updateFilters);
+    map.on('draw.delete', () => {
+      setFilteredData(layerData);
+    });
+  }, [updateFilters, layerData]);
+
+  const handleClick = useCallback((event: any) => {
+    const feature = event.features?.[0];
+    if (!feature) return;
+
+    const coords = feature.geometry.coordinates;
+    const props = feature.properties;
+
+    setPopupInfo({
+      coordinates: coords,
+      props,
+    });
   }, []);
 
   useEffect(() => {
@@ -77,43 +147,125 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
     }
   }, [selectedFeature]);
 
-  const handleClick = useCallback((event: any) => {
-    const feature = event.features?.[0];
-    if (!feature) return;
-
-    const coords = feature.geometry.coordinates;
-    const props = feature.properties;
-
-    setPopupInfo({
-      coordinates: coords,
-      props,
-    });
-  }, []);
-
- const handleMove = (evt: { viewState: typeof viewState }) => {
+  const handleMove = (evt: { viewState: typeof viewState }) => {
   setViewState(evt.viewState);
-};
+  };
 
 
   return (
     <Map
       ref={mapRef}
+      onLoad={handleMapLoad}
       {...viewState}
       onMove={handleMove}
       mapboxAccessToken={MAPBOX_TOKEN}
-      mapStyle="mapbox://styles/mapbox/outdoors-v12"
       style={{ height: '500px', borderRadius: 12 }}
+      mapStyle="mapbox://styles/mapbox/outdoors-v12"
       projection={{ name: 'globe' }}
       interactiveLayerIds={Object.keys(visibleLayers)
         .filter(k => visibleLayers[k as keyof typeof visibleLayers])
         .map(k => `${k}-layer`)}
       onClick={handleClick}
     >
-      <NavigationControl position="top-right" />
+      <NavigationControl 
+        position="top-right" 
+        showCompass={true}
+        visualizePitch={true}
+      />
+
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 120,
+          right: 10,
+          zIndex: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1,
+        }}
+      >
+        <Tooltip title="Rotate Left" placement="left">
+          <IconButton
+            size="small"
+            onClick={() =>
+              mapRef.current?.getMap().rotateTo(mapRef.current.getMap().getBearing() - 15)
+            }
+            sx={{
+              backgroundColor: '#fff',
+              borderRadius: 2,
+              boxShadow: 1,
+              '&:hover': { backgroundColor: '#f0f0f0' },
+            }}
+          >
+            <RotateLeftIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Rotate Right" placement="left">
+          <IconButton
+            size="small"
+            onClick={() =>
+              mapRef.current?.getMap().rotateTo(mapRef.current.getMap().getBearing() + 15)
+            }
+            sx={{
+              backgroundColor: '#fff',
+              borderRadius: 2,
+              boxShadow: 1,
+              '&:hover': { backgroundColor: '#f0f0f0' },
+            }}
+          >
+            <RotateRightIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Reset Pitch" placement="left">
+          <IconButton
+            size="small"
+            onClick={() =>
+              mapRef.current?.getMap().easeTo({ pitch: 0, duration: 500 })
+            }
+            sx={{
+              backgroundColor: '#fff',
+              borderRadius: 2,
+              boxShadow: 1,
+              '&:hover': { backgroundColor: '#f0f0f0' },
+            }}
+          >
+            <ReplayIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Tilt to Ground View" placement="left">
+          <IconButton
+            size="small"
+            onClick={() =>
+              mapRef.current?.getMap().easeTo({
+                pitch: 75,
+                bearing: 20,
+                zoom: 6,
+                duration: 800,
+              })
+            }
+            sx={{
+              backgroundColor: '#fff',
+              borderRadius: 2,
+              boxShadow: 1,
+              '&:hover': { backgroundColor: '#f0f0f0' },
+            }}
+          >
+            <ExploreIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+      </Box>
 
       {Object.entries(visibleLayers).map(([key, isVisible]) =>
-        isVisible && layerData[key] ? (
-          <Source key={key} id={`${key}-source`} type="geojson" data={layerData[key]}>
+        isVisible && filteredData[key] ? (
+          <Source
+            key={key}
+            id={`${key}-source`}
+            type="geojson"
+            data={filteredData[key]}
+          >
             <Layer {...layerStyle} id={`${key}-layer`} />
           </Source>
         ) : null

@@ -4,25 +4,571 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Austin Energy Plant",
+        "name": "Austin Energy Plant #1",
         "type": "Power Plant",
-        "city": "Austin"
+        "city": "Austin",
+        "capacity_mw": 398,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 1995
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-97.7431, 30.2672]
+        "coordinates": [
+          -97.26709558886928,
+          30.661940234343348
+        ]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "name": "Dallas Power Station",
+        "name": "Austin Energy Plant #2",
         "type": "Power Plant",
-        "city": "Dallas"
+        "city": "Austin",
+        "capacity_mw": 613,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 1999
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-96.7970, 32.7767]
+        "coordinates": [
+          -98.08939784445788,
+          30.15434525794987
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #3",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 476,
+        "status": "Planned",
+        "operator": "TXU Energy",
+        "commissioned": 2017
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.62983187445731,
+          33.165749182497386
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #4",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 120,
+        "status": "Planned",
+        "operator": "TXU Energy",
+        "commissioned": 1993
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.03257605743237,
+          32.999319655688055
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #5",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 701,
+        "status": "Active",
+        "operator": "Austin Energy",
+        "commissioned": 2002
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.22279435950595,
+          30.3722665907129
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #6",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 180,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 2007
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.77551632549546,
+          29.79613408644766
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #7",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 479,
+        "status": "Maintenance",
+        "operator": "Austin Energy",
+        "commissioned": 2012
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.51011252078237,
+          29.992014401796325
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #8",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 683,
+        "status": "Active",
+        "operator": "TXU Energy",
+        "commissioned": 2014
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.26041544031393,
+          32.50296969109331
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #9",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 747,
+        "status": "Maintenance",
+        "operator": "Austin Energy",
+        "commissioned": 2015
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.70400407198225,
+          29.93235561533987
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #10",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 564,
+        "status": "Active",
+        "operator": "Austin Energy",
+        "commissioned": 1994
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.1099601069104,
+          30.06332836411078
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #11",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 782,
+        "status": "Active",
+        "operator": "Austin Energy",
+        "commissioned": 1990
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.56436480310973,
+          30.29869874618932
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #12",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 386,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 2022
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.92539520540345,
+          30.765914460370183
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #13",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 787,
+        "status": "Maintenance",
+        "operator": "Austin Energy",
+        "commissioned": 2021
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.48867203832866,
+          30.029295858729093
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #14",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 362,
+        "status": "Active",
+        "operator": "Austin Energy",
+        "commissioned": 1990
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.46554335848715,
+          30.082684570073294
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #15",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 217,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 1990
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.67289616409315,
+          29.883336083666855
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #16",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 880,
+        "status": "Maintenance",
+        "operator": "Austin Energy",
+        "commissioned": 1993
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.12175603555349,
+          30.03109812967864
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #17",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 202,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 2002
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.43527054548613,
+          30.376505935635194
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #18",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 950,
+        "status": "Planned",
+        "operator": "TXU Energy",
+        "commissioned": 2004
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.44505151196066,
+          33.012706579428425
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #19",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 517,
+        "status": "Active",
+        "operator": "Austin Energy",
+        "commissioned": 1991
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.27481705580225,
+          30.24682064261698
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #20",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 431,
+        "status": "Maintenance",
+        "operator": "TXU Energy",
+        "commissioned": 2016
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.33108429747558,
+          32.841274669764196
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #21",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 707,
+        "status": "Active",
+        "operator": "TXU Energy",
+        "commissioned": 2002
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.2375063120417,
+          32.92957559055681
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #22",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 186,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 2020
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.89831809618903,
+          30.05781762012468
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #23",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 545,
+        "status": "Planned",
+        "operator": "TXU Energy",
+        "commissioned": 2011
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.44911512920731,
+          32.670114497670795
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #24",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 711,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 2018
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.85425137520832,
+          30.452244144073653
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #25",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 467,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 2022
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.09898133105234,
+          30.23223323472509
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #26",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 447,
+        "status": "Maintenance",
+        "operator": "TXU Energy",
+        "commissioned": 2022
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.65109015621171,
+          32.66310886200649
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #27",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 117,
+        "status": "Active",
+        "operator": "Austin Energy",
+        "commissioned": 2017
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.51959200499337,
+          30.307500178245288
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #28",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 672,
+        "status": "Planned",
+        "operator": "TXU Energy",
+        "commissioned": 2019
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.19597615675562,
+          32.40626947441371
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dallas Power Station #29",
+        "type": "Power Plant",
+        "city": "Dallas",
+        "capacity_mw": 158,
+        "status": "Planned",
+        "operator": "TXU Energy",
+        "commissioned": 1990
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.36081990848307,
+          32.57197606355177
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austin Energy Plant #30",
+        "type": "Power Plant",
+        "city": "Austin",
+        "capacity_mw": 898,
+        "status": "Planned",
+        "operator": "Austin Energy",
+        "commissioned": 2017
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.13463046115473,
+          30.57034594415957
+        ]
       }
     }
   ]

@@ -4,25 +4,571 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Houston Substation",
+        "name": "El Paso Substation #1",
         "type": "Substation",
-        "city": "Houston"
+        "city": "El Paso",
+        "capacity_mw": 762,
+        "status": "Maintenance",
+        "operator": "El Paso Electric",
+        "commissioned": 2007
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-95.3698, 29.7604]
+        "coordinates": [
+          -106.49358431325784,
+          31.433337963308286
+        ]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "name": "El Paso Substation",
+        "name": "El Paso Substation #2",
         "type": "Substation",
-        "city": "El Paso"
+        "city": "El Paso",
+        "capacity_mw": 345,
+        "status": "Planned",
+        "operator": "El Paso Electric",
+        "commissioned": 2021
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-106.485, 31.7619]
+        "coordinates": [
+          -106.14785390777085,
+          32.25765643169626
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #3",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 991,
+        "status": "Active",
+        "operator": "CenterPoint Energy",
+        "commissioned": 2001
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.66106261588648,
+          30.194695440744237
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #4",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 338,
+        "status": "Maintenance",
+        "operator": "El Paso Electric",
+        "commissioned": 2019
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.78036156872292,
+          31.489685534656015
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #5",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 113,
+        "status": "Planned",
+        "operator": "CenterPoint Energy",
+        "commissioned": 2004
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.24154049510723,
+          30.11139695139419
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #6",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 410,
+        "status": "Active",
+        "operator": "CenterPoint Energy",
+        "commissioned": 2004
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.67662410401513,
+          29.58311173325196
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #7",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 702,
+        "status": "Active",
+        "operator": "CenterPoint Energy",
+        "commissioned": 2004
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.20944675280553,
+          29.559976978453292
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #8",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 730,
+        "status": "Active",
+        "operator": "CenterPoint Energy",
+        "commissioned": 2016
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.48826579061453,
+          30.200215421775916
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #9",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 872,
+        "status": "Active",
+        "operator": "CenterPoint Energy",
+        "commissioned": 2016
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.1058758212688,
+          29.675128130609462
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #10",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 620,
+        "status": "Active",
+        "operator": "El Paso Electric",
+        "commissioned": 2010
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.04375988966909,
+          31.318631286623994
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #11",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 981,
+        "status": "Active",
+        "operator": "El Paso Electric",
+        "commissioned": 2000
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.45926730063832,
+          31.528987252030998
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #12",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 639,
+        "status": "Maintenance",
+        "operator": "CenterPoint Energy",
+        "commissioned": 2003
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.02418185049956,
+          29.79701739440673
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #13",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 926,
+        "status": "Active",
+        "operator": "El Paso Electric",
+        "commissioned": 2008
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.52138609333493,
+          32.06074349585891
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #14",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 996,
+        "status": "Active",
+        "operator": "CenterPoint Energy",
+        "commissioned": 2021
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.16943472396014,
+          29.302942975129877
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #15",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 436,
+        "status": "Planned",
+        "operator": "CenterPoint Energy",
+        "commissioned": 1998
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.24505434466622,
+          30.210553915648582
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #16",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 443,
+        "status": "Maintenance",
+        "operator": "El Paso Electric",
+        "commissioned": 2004
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.3180813424772,
+          32.167382962558584
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #17",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 314,
+        "status": "Planned",
+        "operator": "El Paso Electric",
+        "commissioned": 2020
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.71645869292016,
+          31.795994734499963
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #18",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 543,
+        "status": "Maintenance",
+        "operator": "CenterPoint Energy",
+        "commissioned": 2006
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.07754970848814,
+          29.766813049436003
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #19",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 319,
+        "status": "Active",
+        "operator": "CenterPoint Energy",
+        "commissioned": 1996
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.8424509071461,
+          29.939629682434123
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #20",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 405,
+        "status": "Active",
+        "operator": "El Paso Electric",
+        "commissioned": 2012
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.07486591814391,
+          31.727270218689945
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #21",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 845,
+        "status": "Active",
+        "operator": "El Paso Electric",
+        "commissioned": 2001
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.49047221874844,
+          31.587356360959184
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #22",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 185,
+        "status": "Active",
+        "operator": "El Paso Electric",
+        "commissioned": 2016
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.68285795532962,
+          32.072552375284225
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #23",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 538,
+        "status": "Active",
+        "operator": "El Paso Electric",
+        "commissioned": 2018
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.86210836891564,
+          31.265716045178355
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #24",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 340,
+        "status": "Maintenance",
+        "operator": "El Paso Electric",
+        "commissioned": 2006
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.03881578763138,
+          32.159529708928
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #25",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 195,
+        "status": "Maintenance",
+        "operator": "El Paso Electric",
+        "commissioned": 2008
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.53853602851275,
+          32.206426867565014
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #26",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 428,
+        "status": "Maintenance",
+        "operator": "El Paso Electric",
+        "commissioned": 2009
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.54288470012932,
+          32.198502700102445
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #27",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 534,
+        "status": "Maintenance",
+        "operator": "El Paso Electric",
+        "commissioned": 2002
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.39933186211422,
+          31.90493593322253
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "El Paso Substation #28",
+        "type": "Substation",
+        "city": "El Paso",
+        "capacity_mw": 350,
+        "status": "Active",
+        "operator": "El Paso Electric",
+        "commissioned": 2006
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.9314814134705,
+          31.69731775454355
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #29",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 363,
+        "status": "Maintenance",
+        "operator": "CenterPoint Energy",
+        "commissioned": 1994
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.12628303847856,
+          29.86596044492217
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Houston Substation #30",
+        "type": "Substation",
+        "city": "Houston",
+        "capacity_mw": 179,
+        "status": "Active",
+        "operator": "CenterPoint Energy",
+        "commissioned": 1998
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.7301243142353,
+          29.750305281576978
+        ]
       }
     }
   ]

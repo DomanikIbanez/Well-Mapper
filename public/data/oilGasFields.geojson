@@ -4,25 +4,571 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Permian Basin",
-        "type": "Basin",
-        "city": "Odessa"
+        "name": "Permian Basin #1",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 189,
+        "status": "Planned",
+        "operator": "Occidental Petroleum",
+        "commissioned": 1991
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-103.5, 31.8]
+        "coordinates": [
+          -103.48329640961936,
+          31.60450872564782
+        ]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "name": "Eagle Ford Shale",
-        "type": "Basin",
-        "city": "Eagle Ford"
+        "name": "Eagle Ford Shale #2",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 824,
+        "status": "Active",
+        "operator": "EOG Resources",
+        "commissioned": 2006
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-98.3, 28.4]
+        "coordinates": [
+          -98.65926819029211,
+          28.485345332059183
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #3",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 847,
+        "status": "Planned",
+        "operator": "EOG Resources",
+        "commissioned": 2003
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.63407432709728,
+          28.869980146517907
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #4",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 301,
+        "status": "Planned",
+        "operator": "Occidental Petroleum",
+        "commissioned": 2011
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.23609007274044,
+          32.13593405658284
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #5",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 891,
+        "status": "Planned",
+        "operator": "EOG Resources",
+        "commissioned": 2013
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.11924257255804,
+          28.526830863443852
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #6",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 289,
+        "status": "Maintenance",
+        "operator": "EOG Resources",
+        "commissioned": 1991
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.21409642503679,
+          28.865188147918857
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #7",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 934,
+        "status": "Active",
+        "operator": "Occidental Petroleum",
+        "commissioned": 2020
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.49794594347469,
+          31.973963847860443
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #8",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 990,
+        "status": "Planned",
+        "operator": "EOG Resources",
+        "commissioned": 2009
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.23206842513812,
+          28.458635449223983
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #9",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 587,
+        "status": "Active",
+        "operator": "EOG Resources",
+        "commissioned": 2012
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.85770539619969,
+          28.814392692851158
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #10",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 459,
+        "status": "Planned",
+        "operator": "EOG Resources",
+        "commissioned": 2017
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.8390348793086,
+          28.43995566083937
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #11",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 268,
+        "status": "Active",
+        "operator": "EOG Resources",
+        "commissioned": 1998
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.46594737785885,
+          28.48547659862393
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #12",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 750,
+        "status": "Active",
+        "operator": "Occidental Petroleum",
+        "commissioned": 1994
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.49239493391455,
+          32.22839776438314
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #13",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 380,
+        "status": "Planned",
+        "operator": "EOG Resources",
+        "commissioned": 2015
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.02571615750912,
+          28.330595188670987
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #14",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 910,
+        "status": "Active",
+        "operator": "EOG Resources",
+        "commissioned": 2015
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.89403613664768,
+          28.568286806421018
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #15",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 794,
+        "status": "Active",
+        "operator": "Occidental Petroleum",
+        "commissioned": 2020
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.55232506531974,
+          31.441202099760304
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #16",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 682,
+        "status": "Maintenance",
+        "operator": "EOG Resources",
+        "commissioned": 1991
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.38110419345661,
+          28.76792822515016
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #17",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 305,
+        "status": "Active",
+        "operator": "EOG Resources",
+        "commissioned": 2022
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.00349742218481,
+          28.871882069560986
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #18",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 942,
+        "status": "Planned",
+        "operator": "EOG Resources",
+        "commissioned": 2014
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.13100936425387,
+          28.888438553636185
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #19",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 711,
+        "status": "Planned",
+        "operator": "Occidental Petroleum",
+        "commissioned": 2021
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.36040820882398,
+          31.355946538367142
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #20",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 128,
+        "status": "Maintenance",
+        "operator": "EOG Resources",
+        "commissioned": 2011
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.3134361323853,
+          28.037383507337996
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #21",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 879,
+        "status": "Maintenance",
+        "operator": "EOG Resources",
+        "commissioned": 2012
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.37155650673557,
+          28.397658467198575
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #22",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 745,
+        "status": "Planned",
+        "operator": "Occidental Petroleum",
+        "commissioned": 2000
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.72621089025755,
+          32.09176751886198
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #23",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 196,
+        "status": "Planned",
+        "operator": "EOG Resources",
+        "commissioned": 2004
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.42621990717502,
+          28.293669107824616
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #24",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 195,
+        "status": "Maintenance",
+        "operator": "EOG Resources",
+        "commissioned": 1997
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.41475551852938,
+          28.538902103249658
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #25",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 138,
+        "status": "Active",
+        "operator": "Occidental Petroleum",
+        "commissioned": 2021
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.42410984533448,
+          31.78765360257557
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eagle Ford Shale #26",
+        "type": "Oil Field",
+        "city": "Eagle Ford",
+        "capacity_mw": 957,
+        "status": "Active",
+        "operator": "EOG Resources",
+        "commissioned": 2002
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.2531649369756,
+          28.10825779346531
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #27",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 918,
+        "status": "Maintenance",
+        "operator": "Occidental Petroleum",
+        "commissioned": 1991
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.81527230852642,
+          31.506204554130917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #28",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 822,
+        "status": "Active",
+        "operator": "Occidental Petroleum",
+        "commissioned": 2006
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.40551222045107,
+          32.04952393945341
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #29",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 130,
+        "status": "Active",
+        "operator": "Occidental Petroleum",
+        "commissioned": 2014
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.46790849475154,
+          31.55644578215018
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Permian Basin #30",
+        "type": "Oil Field",
+        "city": "Odessa",
+        "capacity_mw": 919,
+        "status": "Maintenance",
+        "operator": "Occidental Petroleum",
+        "commissioned": 2022
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.14944010357263,
+          31.85186563139047
+        ]
       }
     }
   ]
