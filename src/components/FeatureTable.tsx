@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Typography } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 
 interface FeatureRow {
@@ -8,11 +7,15 @@ interface FeatureRow {
   type?: string;
   city?: string;
   coordinates: [number, number];
+  status?: string;
+  operator?: string;
+  capacity_mw?: number;
+  commissioned?: number;
 }
 
 interface Props {
   data: FeatureRow[];
-  onRowClick: (coordinates: [number, number], name: string) => void;
+  onRowClick: (feature: FeatureRow) => void;
 }
 
 const FeatureTable: React.FC<Props> = ({ data, onRowClick }) => {
@@ -22,25 +25,40 @@ const FeatureTable: React.FC<Props> = ({ data, onRowClick }) => {
     { accessorKey: 'city', header: 'City' },
   ];
 
-  const featureData: FeatureRow[] = [
-  {
-    id: 'test-1',
-    name: 'Test Facility',
-    type: 'Oil',
-    city: 'Nowhere',
-    coordinates: [-97, 30]
-  }
-];
-
-
   return (
     <MaterialReactTable
       columns={columns}
       data={data}
       enableRowSelection={false}
+      muiTablePaperProps={{
+        sx: {
+          borderRadius: 2,
+          overflow: 'hidden',
+          boxShadow: 3,
+          border: '1px solid #ddd',
+        },
+      }}
+      muiTableHeadCellProps={{
+        sx: {
+          background: 'linear-gradient(to right, rgb(109, 85, 154), #1e88e5)',
+          color: '#fff',
+          fontWeight: 'bold',
+        },
+      }}
+      muiTableBodyCellProps={{
+        sx: {
+          backgroundColor: '#f4f6fc',
+          color: '#0d47a1',
+        },
+      }}
       muiTableBodyRowProps={({ row }) => ({
-        onClick: () => onRowClick(row.original.coordinates, row.original.name),
-        sx: { cursor: 'pointer' },
+        onClick: () => onRowClick(row.original),
+        sx: {
+          cursor: 'pointer',
+          '&:hover': {
+            backgroundColor: '#e3f2fd',
+          },
+        },
       })}
     />
   );

@@ -6,20 +6,23 @@ import LayerPanel from './components/LayerPanel';
 import FeatureTable from './components/FeatureTable';
 
 // --- Types ---
-type FeatureRow = {
+export interface FeatureRow {
   id: string;
   name: string;
   type?: string;
   city?: string;
   coordinates: [number, number];
-};
+  status?: string;
+  operator?: string;
+  capacity_mw?: number;
+  commissioned?: number;
+}
+
 
 const App = () => {
   const [featureData, setFeatureData] = useState<FeatureRow[]>([]);
-  const [selectedFeature, setSelectedFeature] = useState<{
-    coordinates: [number, number];
-    name: string;
-  } | null>(null);
+  const [selectedFeature, setSelectedFeature] = useState<FeatureRow | null>(null);
+
 
   const [layersOpen, setLayersOpen] = useState(false);
 
@@ -38,6 +41,10 @@ const App = () => {
           type: f.properties?.type || 'N/A',
           city: f.properties?.city || 'Unknown',
           coordinates: f.geometry?.coordinates?.slice(0, 2) ?? [0, 0],
+          status: f.properties?.status,
+          operator: f.properties?.operator,
+          capacity_mw: f.properties?.capacity_mw,
+          commissioned: f.properties?.commissioned,
         }))
       );
 
@@ -48,9 +55,11 @@ const App = () => {
     loadData();
   }, []);
 
-  const handleRowClick = (coords: [number, number], name: string) => {
-    setSelectedFeature({ coordinates: coords, name });
-  };
+  const handleRowClick = (feature: FeatureRow) => {
+  setSelectedFeature(feature);
+};
+
+
 
   return (
     <Box sx={{ backgroundColor: '#f4f6fa', minHeight: '100vh' }}>

@@ -12,13 +12,10 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../app/store';
+import type { FeatureRow as SelectedFeature } from './FeatureTable';
+
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN!;
-
-type SelectedFeature = {
-  coordinates: [number, number];
-  name: string;
-};
 
 interface MapViewProps {
   selectedFeature: SelectedFeature | null;
@@ -142,7 +139,7 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
 
       setPopupInfo({
         coordinates: selectedFeature.coordinates,
-        props: { name: selectedFeature.name },
+        props: selectedFeature,
       });
     }
   }, [selectedFeature]);
@@ -270,7 +267,6 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
             latitude={lat}
             anchor="bottom"
             onClick={(e: React.MouseEvent) => {
-              e.stopPropagation(); // prevent map click
               setPopupInfo({ coordinates: [lng, lat], props: feature.properties });
             }}
           >
@@ -287,16 +283,36 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
 
       {popupInfo && (
         <Popup
-          longitude={popupInfo.coordinates[0]}
-          latitude={popupInfo.coordinates[1]}
-          closeOnClick={false}
-          onClose={() => setPopupInfo(null)}
+            longitude={popupInfo.coordinates[0]}
+            latitude={popupInfo.coordinates[1]}
+            closeOnClick={false}
+            onClose={() => setPopupInfo(null)}
         >
-          <div style={{ fontFamily: 'Roboto, sans-serif' }}>
-            <strong>{popupInfo.props.name || 'Unknown'}</strong>
-          </div>
+            <div
+            style={{
+                fontFamily: 'Roboto, sans-serif',
+                backgroundColor: '#f4f6fc',
+                color: '#0d47a1',
+                padding: '10px',
+                borderRadius: '8px',
+                minWidth: '220px',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+            }}
+            >
+            <strong style={{ fontSize: '1rem' }}>
+                {popupInfo.props.name || 'Unknown'}
+            </strong>
+            <hr style={{ border: 'none', borderTop: '1px solid #ddd', margin: '8px 0' }} />
+            <div><b>Type:</b> {popupInfo.props.type}</div>
+            <div><b>City:</b> {popupInfo.props.city}</div>
+            <div><b>Capacity:</b> {popupInfo.props.capacity_mw} MW</div>
+            <div><b>Status:</b> {popupInfo.props.status}</div>
+            <div><b>Operator:</b> {popupInfo.props.operator}</div>
+            <div><b>Commissioned:</b> {popupInfo.props.commissioned}</div>
+            </div>
         </Popup>
-      )}
+        )}
+
     </Map>
   );
 };
