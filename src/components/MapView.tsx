@@ -156,7 +156,7 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
       {...viewState}
       onMove={handleMove}
       mapboxAccessToken={MAPBOX_TOKEN}
-      style={{ height: '500px', borderRadius: 12 }}
+      style={{ height: '75vh', borderRadius: 12 }}
       mapStyle="mapbox://styles/mapbox/outdoors-v12"
       projection={{ name: 'globe' }}
       interactiveLayerIds={Object.keys(visibleLayers)
