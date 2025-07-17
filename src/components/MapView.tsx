@@ -266,14 +266,19 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
             longitude={lng}
             latitude={lat}
             anchor="bottom"
-            onClick={(e: React.MouseEvent) => {
-              setPopupInfo({ coordinates: [lng, lat], props: feature.properties });
-            }}
           >
             <img
-              src="/icons/marker-icon-blue.png"
-              alt="marker"
-              style={{ height: 30 }}
+                src="/icons/marker-icon-blue.png"
+                alt="marker"
+                style={{ height: 30 }}
+                onClick={(e) => {
+                e.stopPropagation?.();
+                setPopupInfo({ coordinates: [lng, lat], props: feature.properties });
+                }}
+                onTouchStart={(e) => {
+                e.stopPropagation?.();
+                setPopupInfo({ coordinates: [lng, lat], props: feature.properties });
+                }}
             />
           </Marker>
         );
