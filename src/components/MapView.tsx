@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Map, { Source, Layer, NavigationControl, Popup, MapRef } from 'react-map-gl';
+import Map, { Source, Layer, NavigationControl, Popup, MapRef, Marker } from 'react-map-gl';
 import type { Feature, Point, Polygon } from 'geojson';
 import { Box, IconButton, Tooltip } from '@mui/material';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
@@ -259,17 +259,31 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature }) => {
       </Box>
 
       {Object.entries(visibleLayers).map(([key, isVisible]) =>
-        isVisible && filteredData[key] ? (
-          <Source
-            key={key}
-            id={`${key}-source`}
-            type="geojson"
-            data={filteredData[key]}
+  isVisible && filteredData[key]
+    ? filteredData[key].features.map((feature, i) => {
+        if (feature.geometry.type !== 'Point') return null;
+        const [lng, lat] = feature.geometry.coordinates;
+        return (
+          <Marker
+            key={`${key}-${i}`}
+            longitude={lng}
+            latitude={lat}
+            anchor="bottom"
+            onClick={(e: React.MouseEvent) => {
+              e.stopPropagation(); // prevent map click
+              setPopupInfo({ coordinates: [lng, lat], props: feature.properties });
+            }}
           >
-            <Layer {...layerStyle} id={`${key}-layer`} />
-          </Source>
-        ) : null
-      )}
+            <img
+              src="/icons/marker-icon-blue.png"
+              alt="marker"
+              style={{ height: 30 }}
+            />
+          </Marker>
+        );
+      })
+    : null
+)}
 
       {popupInfo && (
         <Popup
