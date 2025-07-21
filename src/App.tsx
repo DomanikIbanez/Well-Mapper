@@ -5,13 +5,11 @@ import MapView from './components/MapView';
 import LayerPanel from './components/LayerPanel';
 import FeatureTable from './components/FeatureTable';
 
-// --- Types ---
 export interface FeatureRow {
   id: string;
   name: string;
   type?: string;
   city?: string;
-  country?: string;
   coordinates: [number, number];
   status?: string;
   operator?: string;
@@ -21,7 +19,6 @@ export interface FeatureRow {
 
 export interface LayerSettings {
   city?: string;
-  country?: string;
   status?: string;
   operator?: string;
 }
@@ -31,17 +28,15 @@ const App = () => {
   const [selectedFeature, setSelectedFeature] = useState<FeatureRow | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
 
-  // Dynamic dropdown options (populated from data)
+  const [layerSettings, setLayerSettings] = useState<Record<string, LayerSettings>>({
+    powerPlants: { city: '', status: '', operator: '' },
+    oilGasFields: { city: '', status: '', operator: '' },
+    substations: { city: '', status: '', operator: '' },
+  });
+
   const [cityOptions, setCityOptions] = useState<string[]>([]);
   const [statusOptions, setStatusOptions] = useState<string[]>([]);
   const [operatorOptions, setOperatorOptions] = useState<string[]>([]);
-
-  // Per-layer settings (filters)
-  const [layerSettings, setLayerSettings] = useState<Record<string, LayerSettings>>({
-    powerPlants: { city: 'All', status: 'All', operator: 'All', country: 'All' },
-    oilGasFields: { city: 'All', status: 'All', operator: 'All', country: 'All' },
-    substations: { city: 'All', status: 'All', operator: 'All', country: 'All' },
-  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -57,10 +52,9 @@ const App = () => {
           name: f.properties?.name || 'Unnamed',
           type: f.properties?.type || 'N/A',
           city: f.properties?.city || 'Unknown',
-          country: f.properties?.country || 'Unknown',
           coordinates: f.geometry?.coordinates?.slice(0, 2) ?? [0, 0],
-          status: f.properties?.status || 'Unknown',
-          operator: f.properties?.operator || 'Unknown',
+          status: f.properties?.status || '',
+          operator: f.properties?.operator || '',
           capacity_mw: f.properties?.capacity_mw,
           commissioned: f.properties?.commissioned,
         }))
@@ -68,48 +62,32 @@ const App = () => {
 
       setFeatureData(allFeatures);
 
-      // Extract unique dropdown options with "All"
-      const extractOptions = (field: keyof FeatureRow): string[] => {
+      // Collect dropdown options dynamically
+      const unique = (field: keyof FeatureRow) => {
         const values = allFeatures
           .map(f => f[field])
           .filter((v): v is string => typeof v === 'string' && v.trim() !== '');
         return ['All', ...Array.from(new Set(values))];
       };
 
-      setCityOptions(extractOptions('city'));
-      setStatusOptions(extractOptions('status'));
-      setOperatorOptions(extractOptions('operator'));
+      setCityOptions(unique('city'));
+      setStatusOptions(unique('status'));
+      setOperatorOptions(unique('operator'));
     };
 
     loadData();
   }, []);
 
-  const handleRowClick = (feature: FeatureRow) => {
-    setSelectedFeature(feature);
-  };
+  const handleRowClick = (feature: FeatureRow) => setSelectedFeature(feature);
 
   return (
     <Box sx={{ backgroundColor: '#f4f6fa', minHeight: '100vh' }}>
-      <AppBar
-        position="static"
-        sx={{
-          backgroundColor: '#5c6bc0',
-          borderRadius: 0,
-          boxShadow: 'none',
-        }}
-      >
+      <AppBar position="static" sx={{ backgroundColor: '#5c6bc0', borderRadius: 0, boxShadow: 'none' }}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => setLayersOpen(true)}
-          >
+          <IconButton edge="start" color="inherit" onClick={() => setLayersOpen(true)}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" sx={{ ml: 1 }}>
-            Energy Map Explorer
-          </Typography>
+          <Typography variant="h6" sx={{ ml: 1 }}>Energy Map Explorer</Typography>
         </Toolbar>
       </AppBar>
 
@@ -125,13 +103,9 @@ const App = () => {
 
       <Box sx={{ px: 2, py: 3 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={12}>
+          <Grid item xs={12}>
             <Paper elevation={3} sx={{ mb: 2, borderRadius: 2 }}>
-              <MapView
-                selectedFeature={selectedFeature}
-                featureData={featureData}
-                layerSettings={layerSettings}
-              />
+              <MapView selectedFeature={selectedFeature} featureData={featureData} layerSettings={layerSettings} />
             </Paper>
             <Paper elevation={3} sx={{ borderRadius: 2 }}>
               <FeatureTable data={featureData} onRowClick={handleRowClick} />

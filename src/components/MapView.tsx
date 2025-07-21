@@ -28,21 +28,34 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature, featureData, layerSe
   const [popupInfo, setPopupInfo] = useState<any | null>(null);
   const [filteredFeatures, setFilteredFeatures] = useState<FeatureRow[]>(featureData);
 
-  const [viewState, setViewState] = useState({
-    longitude: -97.5,
-    latitude: 30.3,
-    zoom: 5,
-  });
+  const [viewState, setViewState] = useState({ longitude: -97.5, latitude: 30.3, zoom: 5 });
 
   const mapRef = useRef<any | null>(null);
   const drawRef = useRef<Draw | null>(null);
 
-  // Apply all filters: layer toggles, dropdown filters, polygon
-  const applyAllFilters = useCallback(() => {
+  const applyPolygonFilter = useCallback(() => {
     const drawn = drawRef.current?.getAll();
+    if (!drawn || drawn.features.length === 0) {
+      setFilteredFeatures(featureData);
+      return;
+    }
+
+    const polygons = drawn.features.filter((f) => f.geometry.type === 'Polygon');
 
     const filtered = featureData.filter((f) => {
-      // Determine layer key based on type
+      const point = turf.point(f.coordinates);
+      return polygons.some((poly) =>
+        turf.booleanPointInPolygon(point, poly as Feature<Polygon>)
+      );
+    });
+
+    setFilteredFeatures(filtered);
+  }, [featureData]);
+
+  const applyLayerFilters = useCallback(() => {
+    let filtered = featureData;
+
+    filtered = filtered.filter((f) => {
       const layerKey =
         f.type?.toLowerCase().includes('plant') ? 'powerPlants' :
         f.type?.toLowerCase().includes('oil') ? 'oilGasFields' :
@@ -51,63 +64,40 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature, featureData, layerSe
       if (!visibleLayers[layerKey]) return false;
 
       const settings = layerSettings[layerKey] || {};
-      if (settings.city && settings.city !== 'All' && f.city !== settings.city) return false;
-      if (settings.status && settings.status !== 'All' && f.status !== settings.status) return false;
-      if (settings.operator && settings.operator !== 'All' && f.operator !== settings.operator) return false;
-
-      // Polygon filter
-      if (drawn && drawn.features.length > 0) {
-        const point = turf.point(f.coordinates);
-        const insideAny = drawn.features.some(
-          (poly) =>
-            poly.geometry.type === 'Polygon' &&
-            turf.booleanPointInPolygon(point, poly as Feature<Polygon>)
-        );
-        if (!insideAny) return false;
-      }
+      if (settings.city && f.city !== settings.city) return false;
+      if (settings.status && f.status !== settings.status) return false;
+      if (settings.operator && f.operator !== settings.operator) return false;
 
       return true;
     });
 
     setFilteredFeatures(filtered);
-  }, [featureData, visibleLayers, layerSettings]);
+  }, [featureData, layerSettings, visibleLayers]);
 
   const handleMapLoad = useCallback(() => {
     const map = mapRef.current?.getMap();
     if (!map || drawRef.current) return;
 
-    drawRef.current = new Draw({
-      displayControlsDefault: false,
-      controls: { polygon: true, trash: true },
-    });
+    drawRef.current = new Draw({ displayControlsDefault: false, controls: { polygon: true, trash: true } });
     map.addControl(drawRef.current, 'top-left');
 
-    map.on('draw.create', applyAllFilters);
-    map.on('draw.update', applyAllFilters);
+    map.on('draw.create', applyPolygonFilter);
+    map.on('draw.update', applyPolygonFilter);
     map.on('draw.delete', () => setFilteredFeatures(featureData));
-  }, [applyAllFilters, featureData]);
+  }, [applyPolygonFilter, featureData]);
 
   useEffect(() => {
-    applyAllFilters();
-  }, [featureData, layerSettings, visibleLayers, applyAllFilters]);
+    applyLayerFilters();
+  }, [featureData, visibleLayers, layerSettings, applyLayerFilters]);
 
   useEffect(() => {
     if (selectedFeature && mapRef.current) {
-      mapRef.current.flyTo({
-        center: selectedFeature.coordinates,
-        zoom: 10,
-        essential: true,
-      });
-      setPopupInfo({
-        coordinates: selectedFeature.coordinates,
-        props: selectedFeature,
-      });
+      mapRef.current.flyTo({ center: selectedFeature.coordinates, zoom: 10, essential: true });
+      setPopupInfo({ coordinates: selectedFeature.coordinates, props: selectedFeature });
     }
   }, [selectedFeature]);
 
-  const handleMove = (evt: { viewState: typeof viewState }) => {
-    setViewState(evt.viewState);
-  };
+  const handleMove = (evt: { viewState: typeof viewState }) => setViewState(evt.viewState);
 
   return (
     <Map
@@ -120,65 +110,24 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature, featureData, layerSe
       mapStyle="mapbox://styles/mapbox/outdoors-v12"
       projection={{ name: 'globe' }}
     >
-      {/* Zoom & Compass */}
-      <NavigationControl position="top-right" showCompass={true} visualizePitch={true} showZoom={true} />
+      <NavigationControl position="top-right" showCompass={true} showZoom={true} visualizePitch={true} />
 
-      {/* Rotation / Tilt Buttons */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 120,
-          right: 10,
-          zIndex: 10,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 1,
-        }}
-      >
-        <Tooltip title="Rotate Left" placement="left">
-          <IconButton
-            size="small"
-            onClick={() => mapRef.current?.getMap().rotateTo(mapRef.current.getMap().getBearing() - 15)}
-            sx={{ backgroundColor: '#fff', borderRadius: 2, boxShadow: 1, '&:hover': { backgroundColor: '#f0f0f0' } }}
-          >
-            <RotateLeftIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Rotate Right" placement="left">
-          <IconButton
-            size="small"
-            onClick={() => mapRef.current?.getMap().rotateTo(mapRef.current.getMap().getBearing() + 15)}
-            sx={{ backgroundColor: '#fff', borderRadius: 2, boxShadow: 1, '&:hover': { backgroundColor: '#f0f0f0' } }}
-          >
-            <RotateRightIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Reset Pitch" placement="left">
-          <IconButton
-            size="small"
-            onClick={() => mapRef.current?.getMap().easeTo({ pitch: 0, duration: 500 })}
-            sx={{ backgroundColor: '#fff', borderRadius: 2, boxShadow: 1, '&:hover': { backgroundColor: '#f0f0f0' } }}
-          >
-            <ReplayIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Tilt to Ground View" placement="left">
-          <IconButton
-            size="small"
-            onClick={() =>
-              mapRef.current?.getMap().easeTo({ pitch: 75, bearing: 20, zoom: 6, duration: 800 })
-            }
-            sx={{ backgroundColor: '#fff', borderRadius: 2, boxShadow: 1, '&:hover': { backgroundColor: '#f0f0f0' } }}
-          >
-            <ExploreIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+      {/* Rotation/Tilt Controls */}
+      <Box sx={{ position: 'absolute', top: 120, right: 10, zIndex: 10, display: 'flex', flexDirection: 'column', gap: 1 }}>
+        {[{ icon: <RotateLeftIcon />, title: 'Rotate Left', action: () => mapRef.current?.getMap().rotateTo(mapRef.current.getMap().getBearing() - 15) },
+          { icon: <RotateRightIcon />, title: 'Rotate Right', action: () => mapRef.current?.getMap().rotateTo(mapRef.current.getMap().getBearing() + 15) },
+          { icon: <ReplayIcon />, title: 'Reset Pitch', action: () => mapRef.current?.getMap().easeTo({ pitch: 0, duration: 500 }) },
+          { icon: <ExploreIcon />, title: 'Tilt to Ground View', action: () => mapRef.current?.getMap().easeTo({ pitch: 75, bearing: 20, zoom: 6, duration: 800 }) }]
+          .map(({ icon, title, action }, i) => (
+            <Tooltip title={title} key={i} placement="left">
+              <IconButton size="small" onClick={action} sx={{ backgroundColor: '#fff', borderRadius: 2, boxShadow: 1, '&:hover': { backgroundColor: '#f0f0f0' } }}>
+                {icon}
+              </IconButton>
+            </Tooltip>
+          ))}
       </Box>
 
-      {/* PNG Markers */}
+      {/* Render PNG markers */}
       {filteredFeatures.map((f) => {
         const [lng, lat] = f.coordinates;
         return (
@@ -187,14 +136,8 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature, featureData, layerSe
               src="/icons/marker-icon-blue.png"
               alt="marker"
               style={{ height: 30, cursor: 'pointer' }}
-              onClick={(e) => {
-                e.stopPropagation?.();
-                setPopupInfo({ coordinates: [lng, lat], props: f });
-              }}
-              onTouchStart={(e) => {
-                e.stopPropagation?.();
-                setPopupInfo({ coordinates: [lng, lat], props: f });
-              }}
+              onClick={(e) => { e.stopPropagation?.(); setPopupInfo({ coordinates: [lng, lat], props: f }); }}
+              onTouchStart={(e) => { e.stopPropagation?.(); setPopupInfo({ coordinates: [lng, lat], props: f }); }}
             />
           </Marker>
         );
@@ -202,23 +145,8 @@ const MapView: React.FC<MapViewProps> = ({ selectedFeature, featureData, layerSe
 
       {/* Popup */}
       {popupInfo && (
-        <Popup
-          longitude={popupInfo.coordinates[0]}
-          latitude={popupInfo.coordinates[1]}
-          closeOnClick={false}
-          onClose={() => setPopupInfo(null)}
-        >
-          <div
-            style={{
-              fontFamily: 'Roboto, sans-serif',
-              backgroundColor: '#f4f6fc',
-              color: '#0d47a1',
-              padding: '10px',
-              borderRadius: '8px',
-              minWidth: '220px',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-            }}
-          >
+        <Popup longitude={popupInfo.coordinates[0]} latitude={popupInfo.coordinates[1]} closeOnClick={false} onClose={() => setPopupInfo(null)}>
+          <div style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: '#f4f6fc', color: '#0d47a1', padding: '10px', borderRadius: '8px', minWidth: '220px', boxShadow: '0 2px 6px rgba(0,0,0,0.15)' }}>
             <strong style={{ fontSize: '1rem' }}>{popupInfo.props.name || 'Unknown'}</strong>
             <hr style={{ border: 'none', borderTop: '1px solid #ddd', margin: '8px 0' }} />
             <div><b>Type:</b> {popupInfo.props.type}</div>

@@ -10,7 +10,7 @@ import {
   Box,
   Switch,
   TextField,
-  MenuItem,
+  MenuItem
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FlashOnIcon from '@mui/icons-material/FlashOn';
@@ -50,7 +50,7 @@ const LayerPanel: React.FC<Props> = ({
   setLayerSettings,
   cityOptions,
   statusOptions,
-  operatorOptions,
+  operatorOptions
 }) => {
   const dispatch = useDispatch();
   const visibleLayers = useSelector((state: RootState) => state.layers.visibleLayers);
@@ -64,7 +64,7 @@ const LayerPanel: React.FC<Props> = ({
       ...layerSettings,
       [layer]: {
         ...layerSettings[layer],
-        [field]: value,
+        [field]: value === 'All' ? '' : value,
       },
     });
   };
@@ -94,7 +94,6 @@ const LayerPanel: React.FC<Props> = ({
           const layer = key as LayerKey;
           return (
             <Box key={layer} sx={{ mb: 3 }}>
-              {/* Toggle */}
               <ListItem
                 onClick={() => handleToggle(layer)}
                 sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
@@ -104,49 +103,25 @@ const LayerPanel: React.FC<Props> = ({
                 <ListItemText primary={LAYER_LABELS[layer]} />
               </ListItem>
 
-              {/* Dropdown Filters */}
+              {/* Filters */}
               <Box sx={{ pl: 5, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <TextField
-                  select
-                  size="small"
-                  label="City"
-                  value={layerSettings[layer]?.city || 'All'}
-                  onChange={(e) => updateSetting(layer, 'city', e.target.value)}
-                >
-                  {cityOptions.map((opt: string) => (
-                    <MenuItem key={opt} value={opt}>
-                      {opt}
-                    </MenuItem>
+                {[{ label: 'City', field: 'city', options: cityOptions },
+                  { label: 'Status', field: 'status', options: statusOptions },
+                  { label: 'Operator', field: 'operator', options: operatorOptions }]
+                  .map(({ label, field, options }) => (
+                    <TextField
+                      key={field}
+                      select
+                      label={label}
+                      size="small"
+                      value={layerSettings[layer]?.[field as keyof LayerSettings] || ''}
+                      onChange={(e) => updateSetting(layer, field as keyof LayerSettings, e.target.value)}
+                    >
+                      {options.map((opt, i) => (
+                        <MenuItem key={i} value={opt}>{opt}</MenuItem>
+                      ))}
+                    </TextField>
                   ))}
-                </TextField>
-
-                <TextField
-                  select
-                  size="small"
-                  label="Status"
-                  value={layerSettings[layer]?.status || 'All'}
-                  onChange={(e) => updateSetting(layer, 'status', e.target.value)}
-                >
-                  {statusOptions.map((opt: string) => (
-                    <MenuItem key={opt} value={opt}>
-                      {opt}
-                    </MenuItem>
-                  ))}
-                </TextField>
-
-                <TextField
-                  select
-                  size="small"
-                  label="Operator"
-                  value={layerSettings[layer]?.operator || 'All'}
-                  onChange={(e) => updateSetting(layer, 'operator', e.target.value)}
-                >
-                  {operatorOptions.map((opt: string) => (
-                    <MenuItem key={opt} value={opt}>
-                      {opt}
-                    </MenuItem>
-                  ))}
-                </TextField>
               </Box>
             </Box>
           );
