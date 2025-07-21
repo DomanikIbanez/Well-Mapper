@@ -11,6 +11,7 @@ export interface FeatureRow {
   name: string;
   type?: string;
   city?: string;
+  country?: string;
   coordinates: [number, number];
   status?: string;
   operator?: string;
@@ -18,13 +19,29 @@ export interface FeatureRow {
   commissioned?: number;
 }
 
+export interface LayerSettings {
+  city?: string;
+  country?: string;
+  status?: string;
+  operator?: string;
+}
 
 const App = () => {
   const [featureData, setFeatureData] = useState<FeatureRow[]>([]);
   const [selectedFeature, setSelectedFeature] = useState<FeatureRow | null>(null);
-
-
   const [layersOpen, setLayersOpen] = useState(false);
+
+  // Dynamic dropdown options (populated from data)
+  const [cityOptions, setCityOptions] = useState<string[]>([]);
+  const [statusOptions, setStatusOptions] = useState<string[]>([]);
+  const [operatorOptions, setOperatorOptions] = useState<string[]>([]);
+
+  // Per-layer settings (filters)
+  const [layerSettings, setLayerSettings] = useState<Record<string, LayerSettings>>({
+    powerPlants: { city: 'All', status: 'All', operator: 'All', country: 'All' },
+    oilGasFields: { city: 'All', status: 'All', operator: 'All', country: 'All' },
+    substations: { city: 'All', status: 'All', operator: 'All', country: 'All' },
+  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -34,38 +51,53 @@ const App = () => {
         fetch('/data/substations.geojson').then(res => res.json()),
       ]);
 
-      const allFeatures = datasets.flatMap((data, index) =>
+      const allFeatures: FeatureRow[] = datasets.flatMap((data, index) =>
         (data.features ?? []).map((f: any, i: number) => ({
           id: `${['plant', 'field', 'sub'][index]}-${i}`,
           name: f.properties?.name || 'Unnamed',
           type: f.properties?.type || 'N/A',
           city: f.properties?.city || 'Unknown',
+          country: f.properties?.country || 'Unknown',
           coordinates: f.geometry?.coordinates?.slice(0, 2) ?? [0, 0],
-          status: f.properties?.status,
-          operator: f.properties?.operator,
+          status: f.properties?.status || 'Unknown',
+          operator: f.properties?.operator || 'Unknown',
           capacity_mw: f.properties?.capacity_mw,
           commissioned: f.properties?.commissioned,
         }))
       );
 
-      console.log('✅ Loaded Feature Data:', allFeatures);
       setFeatureData(allFeatures);
+
+      // Extract unique dropdown options with "All"
+      const extractOptions = (field: keyof FeatureRow): string[] => {
+        const values = allFeatures
+          .map(f => f[field])
+          .filter((v): v is string => typeof v === 'string' && v.trim() !== '');
+        return ['All', ...Array.from(new Set(values))];
+      };
+
+      setCityOptions(extractOptions('city'));
+      setStatusOptions(extractOptions('status'));
+      setOperatorOptions(extractOptions('operator'));
     };
 
     loadData();
   }, []);
 
   const handleRowClick = (feature: FeatureRow) => {
-  setSelectedFeature(feature);
-};
-
-
+    setSelectedFeature(feature);
+  };
 
   return (
     <Box sx={{ backgroundColor: '#f4f6fa', minHeight: '100vh' }}>
-      <AppBar position="static" sx={{ backgroundColor: '#5c6bc0',
-        borderRadius: 0, boxShadow: 'none',
-       }}>
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: '#5c6bc0',
+          borderRadius: 0,
+          boxShadow: 'none',
+        }}
+      >
         <Toolbar>
           <IconButton
             edge="start"
@@ -81,13 +113,25 @@ const App = () => {
         </Toolbar>
       </AppBar>
 
-      <LayerPanel open={layersOpen} onClose={() => setLayersOpen(false)} />
+      <LayerPanel
+        open={layersOpen}
+        onClose={() => setLayersOpen(false)}
+        layerSettings={layerSettings}
+        setLayerSettings={setLayerSettings}
+        cityOptions={cityOptions}
+        statusOptions={statusOptions}
+        operatorOptions={operatorOptions}
+      />
 
       <Box sx={{ px: 2, py: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Paper elevation={3} sx={{ mb: 2, borderRadius: 2 }}>
-              <MapView selectedFeature={selectedFeature} />
+              <MapView
+                selectedFeature={selectedFeature}
+                featureData={featureData}
+                layerSettings={layerSettings}
+              />
             </Paper>
             <Paper elevation={3} sx={{ borderRadius: 2 }}>
               <FeatureTable data={featureData} onRowClick={handleRowClick} />
