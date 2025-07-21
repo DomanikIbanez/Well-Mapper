@@ -63,7 +63,9 @@ const App = () => {
 
   return (
     <Box sx={{ backgroundColor: '#f4f6fa', minHeight: '100vh' }}>
-      <AppBar position="static" sx={{ backgroundColor: '#5c6bc0' }}>
+      <AppBar position="static" sx={{ backgroundColor: '#5c6bc0',
+        borderRadius: 0, boxShadow: 'none',
+       }}>
         <Toolbar>
           <IconButton
             edge="start"
